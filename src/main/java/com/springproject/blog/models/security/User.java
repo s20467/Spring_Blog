@@ -1,5 +1,6 @@
 package com.springproject.blog.models.security;
 
+import com.springproject.blog.models.Article;
 import lombok.*;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -62,4 +63,7 @@ public class User implements UserDetails, CredentialsContainer {
     public void eraseCredentials() {
 
     }
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private Set<Article> articles;
 }
