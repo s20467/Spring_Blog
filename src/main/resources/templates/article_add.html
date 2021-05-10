@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Document</title>
+</head>
+<body>
+<header>
+    <h1 class="logo">Blog Website project</h1>
+    <nav>
+        <ul class="menu">
+            <li><a href="#">Find Author</a></li>
+            <li><a href="#">Find Article</a></li>
+            <li><a href="#">Add Article</a></li>
+            <li><a href="#">My Articles</a></li>
+            <li><a href="#">Login/Logout</a></li>
+            <li><a href="#">Register</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <article id="article">
+        <form  id="article_form" th:action="@{/article/save}" th:object="${article}" method="POST">
+            <textarea th:field="*{title}" name="articleTitle" form="article_form" id="article_title_textarea" placeholder="Title"></textarea>
+
+            <textarea th:field="*{content}" name="articleContent" form="article_form" id="article_content_textarea" placeholder="Content"></textarea>
+
+            <button th:type="submit">Post Article</button>
+        </form>
+    </article>
+</main>
+
+<footer>
+
+</footer>
+</body>
+</html>
