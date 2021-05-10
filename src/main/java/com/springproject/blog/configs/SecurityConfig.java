@@ -24,12 +24,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/h2-console", "/h2-console/**").permitAll()
+                .antMatchers("/article/", "/article/index", "/h2-console", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .and().httpBasic()
-                .and().csrf().ignoringAntMatchers("/h2-console/**")
+                //.and().csrf().ignoringAntMatchers("/h2-console/**")
                 .and().userDetailsService(userDetailsService);
+
+        http.csrf().disable();
 
         http.headers().frameOptions().sameOrigin();
     }
