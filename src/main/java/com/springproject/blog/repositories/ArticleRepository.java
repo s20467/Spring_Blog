@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Set;
 
 public interface ArticleRepository extends CrudRepository<Article, Integer> {
-    Set<Article> getArticlesByAuthor(User user);
-    Set<Article> getArticlesByTitle(String title);
+    Iterable<Article> getArticlesByAuthor(User user);
+    Iterable<Article> getArticlesByTitle(String title);
 }
