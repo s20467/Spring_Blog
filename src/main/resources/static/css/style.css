@@ -95,9 +95,8 @@ button{
     padding: 5px;
     width: 120px;
     background-color: #616475;
-    border: solid 1px;
     border-radius: 4px;
-    border-color: rgb(129, 129, 129);
+    border: 1px solid rgb(129, 129, 129);
     color: #ddd;
 }
 
@@ -105,10 +104,33 @@ button:hover{
     font-size: 20px;
     padding: 5px;
     width: 120px;
-    background-color: #616475;
-    border: solid 1px;
     border-radius: 4px;
-    border-color: rgb(129, 129, 129);
+    border: 1px solid rgb(129, 129, 129);
     background-color: #8458B3;
+}
+
+#article_title_list{
+    font-size: 30px;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+
+#article_author_list{
+    font-size: 15px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    border-bottom: 1px dashed black;
+    margin-bottom: 20px;
+}
+
+#show_article_div:hover{
+    background-color: #8458B3;
+    border-radius: 3px;
+}
+
+#show_article_href:link, :visited, :hover, :active{
+    color: #ddd;
+    text-decoration: none;
 }
 
