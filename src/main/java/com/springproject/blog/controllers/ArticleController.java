@@ -85,8 +85,8 @@ public class ArticleController {
         return "articles_found_view";
     }
 
-    @PostAuthorize("hasAuthority('article.update') or " +
-            "hasAuthority('user.article.update') and @articleAuthenticationManager.userMatches(authentication, #model.getAttribute('article').author)")
+    @PreAuthorize("hasAuthority('article.update') or " +
+            "hasAuthority('user.article.update') and @articleAuthenticationManager.userMatchesBasedOnArticleId(authentication, #id)")
     @GetMapping("/edit/{id}")
     public String articleEdit(@PathVariable int id, Model model){
         model.addAttribute("article", articleService.findById(id));
