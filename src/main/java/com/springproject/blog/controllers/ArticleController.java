@@ -1,16 +1,14 @@
 package com.springproject.blog.controllers;
 
-import com.springproject.blog.models.Article;
 import com.springproject.blog.models.dto.ArticleDto;
 import com.springproject.blog.models.security.User;
 import com.springproject.blog.services.ArticleService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,12 +29,14 @@ public class ArticleController {
         return "articles_found_view";
     }
 
+    @PreAuthorize("isFullyAuthenticated()")
     @GetMapping("/create")
     public String articleCreate(Model model){
         model.addAttribute("article", new ArticleDto());
         return "article_add";
     }
 
+    @PreAuthorize("isFullyAuthenticated()")
     @PostMapping("/createProcess")
     public String processArticleCreate(Model model, ArticleDto article){
         articleService.save(article);
@@ -76,11 +76,29 @@ public class ArticleController {
         return "article_view";
     }
 
+    @PreAuthorize("isFullyAuthenticated()")
     @GetMapping("/my")
     public String myArticlesShow(Model model){
         User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<ArticleDto> articles = currentUser.getArticles().stream().map(ArticleDto::new).collect(Collectors.toSet());
         model.addAttribute("articles", articles);
         return "articles_found_view";
+    }
+
+    @PostAuthorize("hasAuthority('article.update') or " +
+            "hasAuthority('user.article.update') and @articleAuthenticationManager.userMatches(authentication, #model.getAttribute('article').author)")
+    @GetMapping("/edit/{id}")
+    public String articleEdit(@PathVariable int id, Model model){
+        model.addAttribute("article", articleService.findById(id));
+        return "article_edit";
+    }
+
+    @PreAuthorize("hasAuthority('article.update') or " +
+            "hasAuthority('user.article.update') and @articleAuthenticationManager.userMatches(authentication, #article.author)")
+    @PostMapping("/editProcess")
+    public String processArticleEdit(Model model, ArticleDto article){
+        articleService.update(article);
+        model.addAttribute("article", article);
+        return "article_view";
     }
 }
