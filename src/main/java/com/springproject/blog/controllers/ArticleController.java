@@ -101,4 +101,12 @@ public class ArticleController {
         model.addAttribute("article", article);
         return "article_view";
     }
+
+    @PreAuthorize("hasAuthority('article.delete') or " +
+            "hasAuthority('user.article.delete') and @articleAuthenticationManager.userMatchesBasedOnArticleId(authentication, #id)")
+    @GetMapping("/delete/{id}")
+    public String articleDelete(@PathVariable int id){
+        articleService.deleteById(id);
+        return "redirect:/article";
+    }
 }

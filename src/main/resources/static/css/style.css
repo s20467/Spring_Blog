@@ -132,6 +132,11 @@ button:hover{
     border-radius: 3px;
 }
 
+#edit_href, #delete_href{
+    float: left;
+    margin-right: 5px;
+}
+
 #show_article_href:link, :visited, :hover, :active{
     color: #ddd;
     text-decoration: none;

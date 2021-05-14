@@ -28,8 +28,11 @@
         <div th:text="${article.title}" id="article_title">Article Title</div>
         <div th:text="${article.author}" id="article_author">Article Author</div>
         <div th:text="${article.content}" id="article_content">Article Content</div>
-        <a th:href="@{'/article/edit/' + ${article.id}}">
+        <a id="edit_href" th:href="@{'/article/edit/' + ${article.id}}">
             <button>Edit Article</button>
+        </a>
+        <a id="delete_href" th:href="@{'/article/delete/' + ${article.id}}">
+            <button>Delete</button>
         </a>
     </article>
 </main>

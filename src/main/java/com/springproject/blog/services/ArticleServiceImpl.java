@@ -84,4 +84,12 @@ public class ArticleServiceImpl implements ArticleService{
                 .map(ArticleDto::new)
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public void deleteById(int id) {
+        if(!articleRepository.existsById(id))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article id: " + id + " not found");
+
+        articleRepository.deleteById(id);
+    }
 }

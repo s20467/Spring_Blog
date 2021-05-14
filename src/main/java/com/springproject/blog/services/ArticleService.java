@@ -13,4 +13,6 @@ public interface ArticleService {
     void delete(ArticleDto Article);
     Set<ArticleDto> findByTitle(String title);
     Set<ArticleDto> findByAuthor(String title);
+
+    void deleteById(int id);
 }
