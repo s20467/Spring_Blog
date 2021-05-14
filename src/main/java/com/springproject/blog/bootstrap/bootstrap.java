@@ -45,7 +45,7 @@ public class bootstrap implements CommandLineRunner {
         Authority createArticleUser = authorityRepository.save(Authority.builder().permission("user.article.create").build());
         Authority readArticleUser = authorityRepository.save(Authority.builder().permission("user.article.read").build());
         Authority updateArticleUser = authorityRepository.save(Authority.builder().permission("user.article.update").build());
-        Authority deleteArticleUser = authorityRepository.save(Authority.builder().permission("user.article.update").build());
+        Authority deleteArticleUser = authorityRepository.save(Authority.builder().permission("user.article.delete").build());
 
 
 
