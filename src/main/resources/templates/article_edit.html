@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>Document</title>
+</head>
+<body>
+<header>
+  <h1 class="logo">Blog Website project</h1>
+  <nav>
+    <ul class="menu">
+      <li><a href="/article/findByAuthor">Find Author</a></li>
+      <li><a href="/article/find">Find Article</a></li>
+      <li><a href="/article/create">Add Article</a></li>
+      <li><a href="/article/my">My Articles</a></li>
+      <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
+      <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
+      <li sec:authorize="isAnonymous()"><a href="#">Register</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <article id="article">
+    <form  id="article_form" th:action="@{/article/editProcess}" th:object="${article}" method="POST">
+      <input type="hidden" th:field="*{id}" name="articleId">
+      <input type="hidden" th:field="*{author}" name="articleAuthor">
+      <textarea th:field="*{title}" name="articleTitle" form="article_form" id="article_title_textarea" placeholder="Title"></textarea>
+
+      <textarea th:field="*{content}" name="articleContent" form="article_form" id="article_content_textarea" placeholder="Content"></textarea>
+
+      <button th:type="submit">Edit Article</button>
+    </form>
+  </article>
+</main>
+
+<footer>
+
+</footer>
+</body>
+</html>
