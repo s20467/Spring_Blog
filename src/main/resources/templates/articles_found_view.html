@@ -26,7 +26,7 @@
 <main>
   <article id="article">
     <div id="show_article_div" th:each="article : ${articles}">
-      <a id="show_article_href" th:href="@{'show/' + ${article.getId()}}">
+      <a id="show_article_href" th:href="@{'article/show/' + ${article.getId()}}">
         <div th:text="${article.getTitle()}" id="article_title_list">Article Title</div>
         <div th:text="${article.getAuthor()}" id="article_author_list">Article Author</div>
       </a>

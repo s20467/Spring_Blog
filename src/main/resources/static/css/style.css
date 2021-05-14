@@ -67,6 +67,10 @@ nav{
     padding-bottom: 20px;
 }
 
+#article_content{
+    padding-bottom: 10px;
+}
+
 #article_title_textarea{
     background-color: #494D5F;
     border-style: solid;
@@ -121,7 +125,6 @@ button:hover{
     padding-bottom: 10px;
     padding-left: 5px;
     border-bottom: 1px dashed black;
-    margin-bottom: 20px;
 }
 
 #show_article_div:hover{
