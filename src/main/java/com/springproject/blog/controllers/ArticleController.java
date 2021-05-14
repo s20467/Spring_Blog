@@ -2,15 +2,18 @@ package com.springproject.blog.controllers;
 
 import com.springproject.blog.models.Article;
 import com.springproject.blog.models.dto.ArticleDto;
+import com.springproject.blog.models.security.User;
 import com.springproject.blog.services.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/article")
@@ -22,9 +25,10 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    @GetMapping({"", "index"})
-    public String getHomePage(){
-        return "index";
+    @GetMapping("")
+    public String getHomePage(Model model){
+        model.addAttribute("articles", articleService.findAll());
+        return "articles_found_view";
     }
 
     @GetMapping("/create")
@@ -70,5 +74,13 @@ public class ArticleController {
     public String articleShow(@PathVariable int id, Model model){
         model.addAttribute("article", articleService.findById(id));
         return "article_view";
+    }
+
+    @GetMapping("/my")
+    public String myArticlesShow(Model model){
+        User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Set<ArticleDto> articles = currentUser.getArticles().stream().map(ArticleDto::new).collect(Collectors.toSet());
+        model.addAttribute("articles", articles);
+        return "articles_found_view";
     }
 }
