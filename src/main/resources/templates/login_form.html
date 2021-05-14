@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>Document</title>
+</head>
+<body>
+<header>
+  <h1 class="logo">Blog Website project</h1>
+  <nav>
+    <ul class="menu">
+      <li><a href="/article/findByAuthor">Find Author</a></li>
+      <li><a href="/article/find">Find Article</a></li>
+      <li><a href="/article/create">Add Article</a></li>
+      <li><a href="/article/my">My Articles</a></li>
+      <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
+      <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
+      <li sec:authorize="isAnonymous()"><a href="#">Register</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <article id="article">
+    <div id="login">
+      <p th:if="${loginError}" class="error">Wrong Username or password</p>
+      <form th:action="@{/login}" method="POST">
+        <label for="username">Username:</label><br>
+        <input class="login_field" type="text" id="username" name="username" autofocus="true" autocomplete="off"><br>
+        <label for="password">Password:</label><br>
+        <input class="login_field" type="password" id="password" name="password" autofocus="true" autocomplete="off"><br>
+        <button th:type="submit">Log In</button>
+      </form>
+    </div>
+  </article>
+</main>
+
+<footer>
+
+</footer>
+</body>
+</html>
