@@ -14,6 +14,9 @@ h1.logo{
     margin-top: 20px;
     margin-bottom: 20px;
 }
+#logo_href{
+    text-decoration: none;
+}
 nav{
     background-color:  #8458B3;
     text-align: center;

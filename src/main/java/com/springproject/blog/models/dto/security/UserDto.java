@@ -1,7 +1,10 @@
 package com.springproject.blog.models.dto.security;
 
 import com.springproject.blog.models.security.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -10,7 +13,7 @@ import lombok.*;
 public class UserDto {
     public String username;
 
-    public UserDto(User user){
+    public UserDto(User user) {
         username = user.getUsername();
     }
 }

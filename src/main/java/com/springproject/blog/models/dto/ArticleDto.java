@@ -14,7 +14,7 @@ public class ArticleDto {
     private String content;
     private String author;
 
-    public ArticleDto(Article article){
+    public ArticleDto(Article article) {
         id = article.getId();
         title = article.getTitle();
         content = article.getContent();

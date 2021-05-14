@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class ArticleServiceImpl implements ArticleService{
+public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
 
@@ -41,7 +41,7 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public ArticleDto save(ArticleDto article) {
         Article persistedArticle = Article.builder()
-                .author((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .author((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                 .title(article.getTitle())
                 .content(article.getContent())
                 .createdAt(Timestamp.valueOf(LocalDateTime.now()))
@@ -61,7 +61,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public void delete(ArticleDto article) {
-        if(!articleRepository.existsById(article.getId()))
+        if (!articleRepository.existsById(article.getId()))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article id: " + article.getId() + " not found");
 
         articleRepository.deleteById(article.getId());
@@ -87,7 +87,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public void deleteById(int id) {
-        if(!articleRepository.existsById(id))
+        if (!articleRepository.existsById(id))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article id: " + id + " not found");
 
         articleRepository.deleteById(id);

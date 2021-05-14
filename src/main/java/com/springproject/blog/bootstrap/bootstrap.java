@@ -48,7 +48,6 @@ public class bootstrap implements CommandLineRunner {
         Authority deleteArticleUser = authorityRepository.save(Authority.builder().permission("user.article.delete").build());
 
 
-
         Role userRole = roleRepository.save(Role.builder()
                 .authorities(Set.of(createArticleUser, readArticleUser, updateArticleUser, deleteArticleUser))
                 .name("ROLE_USER").build());
@@ -56,7 +55,6 @@ public class bootstrap implements CommandLineRunner {
         Role adminRole = roleRepository.save(Role.builder()
                 .authorities(Set.of(createArticle, readArticle, updateArticle, deleteArticle))
                 .name("ROLE_ADMIN").build());
-
 
 
         User user = User.builder()

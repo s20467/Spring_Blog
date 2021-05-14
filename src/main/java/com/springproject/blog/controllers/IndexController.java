@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     @GetMapping("")
-    public String redirectToArticleHomePage(){
+    public String redirectToArticleHomePage() {
         return "redirect:/article";
     }
 }
