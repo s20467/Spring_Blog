@@ -27,6 +27,7 @@
 <main>
     <article id="article">
         <form  id="article_form" th:action="@{/article/createProcess}" th:object="${article}" method="POST">
+            <input type="hidden" name="$_csrf.parameterName}" value="${_csrf.token}"/>
             <textarea th:field="*{title}" name="articleTitle" form="article_form" id="article_title_textarea" placeholder="Title"></textarea>
 
             <textarea th:field="*{content}" name="articleContent" form="article_form" id="article_content_textarea" placeholder="Content"></textarea>
