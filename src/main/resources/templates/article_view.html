@@ -18,7 +18,7 @@
             <li><a href="/article/my">My Articles</a></li>
             <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
             <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
-            <li sec:authorize="isAnonymous()"><a href="#">Register</a></li>
+            <li sec:authorize="isAnonymous()"><a href="/register">Register</a></li>
         </ul>
     </nav>
 </header>

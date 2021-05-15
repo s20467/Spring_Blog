@@ -26,11 +26,17 @@
 
 <main>
   <article id="article">
-    <form  id="article_find_form" th:action="@{/article/findByAuthorProcess}" th:object="${article}" method="POST">
-      <textarea th:field="*{author}" name="articleAuthor" form="article_find_form" id="article_title_textarea" placeholder="Type the author you're looking for"></textarea>
-
-      <button th:type="submit">Find Author</button>
-    </form>
+    <div id="login">
+      <p>Register new account:</p>
+      <p th:if="${loginError}" class="error">Wrong Username or password</p>
+      <form th:action="@{/register}" method="POST">
+        <label for="username">Username:</label><br>
+        <input class="login_field" type="text" id="username" name="username" autofocus="true" autocomplete="off"><br>
+        <label for="password">Password:</label><br>
+        <input class="login_field" type="password" id="password" name="password" autofocus="true" autocomplete="off"><br>
+        <button th:type="submit">Log In</button>
+      </form>
+    </div>
   </article>
 </main>
 

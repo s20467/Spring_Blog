@@ -19,7 +19,7 @@
       <li><a href="/article/my">My Articles</a></li>
       <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
       <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
-      <li sec:authorize="isAnonymous()"><a href="#">Register</a></li>
+      <li sec:authorize="isAnonymous()"><a href="/register">Register</a></li>
     </ul>
   </nav>
 </header>
@@ -27,6 +27,7 @@
 <main>
   <article id="article">
     <div id="login">
+      <p>Login with an existing account:</p>
       <p th:if="${loginError}" class="error">Wrong Username or password</p>
       <form th:action="@{/login}" method="POST">
         <label for="username">Username:</label><br>
