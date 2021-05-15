@@ -17,7 +17,7 @@ public interface ArticleService {
 
     Set<ArticleDto> findByTitle(String title);
 
-    Set<ArticleDto> findByAuthor(String title);
+    Set<ArticleDto> findByAuthor(String author);
 
     void deleteById(int id);
 }

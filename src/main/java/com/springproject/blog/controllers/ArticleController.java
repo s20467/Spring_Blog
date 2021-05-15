@@ -41,7 +41,7 @@ public class ArticleController {
     @PreAuthorize("isFullyAuthenticated()")
     @PostMapping("/createProcess")
     public String processArticleCreate(Model model, ArticleDto article) {
-        articleService.save(article);
+        article = articleService.save(article);
         model.addAttribute("article", article);
         return "article_view";
     }
@@ -81,8 +81,8 @@ public class ArticleController {
     @PreAuthorize("isFullyAuthenticated()")
     @GetMapping("/my")
     public String myArticlesShow(Model model) {
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<ArticleDto> articles = currentUser.getArticles().stream().map(ArticleDto::new).collect(Collectors.toSet());
+        String currentUsername = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        Set<ArticleDto> articles = articleService.findByAuthor(currentUsername);
         model.addAttribute("articles", articles);
         return "articles_found_view";
     }
