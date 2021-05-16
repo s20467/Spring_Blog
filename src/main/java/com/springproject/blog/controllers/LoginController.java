@@ -37,8 +37,10 @@ public class LoginController {
 
     @PostMapping("/register")
     public String register(Model model, User user){
+        if(user.getUsername().isBlank() || user.getPassword().isBlank())
+            return "redirect:/register/?errorBadCredentials";
         if(userRepository.existsByUsername(user.getUsername()))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "User with username: " + user.getUsername() + " already exists");
+            return "redirect:/register/?errorAlreadyExists";
         User newUser = User.builder()
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))

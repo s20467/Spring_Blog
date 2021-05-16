@@ -28,7 +28,7 @@
   <article id="article">
     <div id="login">
       <p>Login with an existing account:</p>
-      <p th:if="${loginError}" class="error">Wrong Username or password</p>
+      <p th:if="${param.error}" class="error">Wrong Username or password</p>
       <form th:action="@{/login}" method="POST">
         <label for="username">Username:</label><br>
         <input class="login_field" type="text" id="username" name="username" autofocus="true" autocomplete="off"><br>

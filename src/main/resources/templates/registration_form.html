@@ -28,7 +28,8 @@
   <article id="article">
     <div id="login">
       <p>Register new account:</p>
-      <p th:if="${loginError}" class="error">Wrong Username or password</p>
+      <p th:if="${param.errorAlreadyExists}" class="error">User already exists</p>
+      <p th:if="${param.errorBadCredentials}" class="error">Wrong Username or password</p>
       <form th:action="@{/register}" method="POST">
         <label for="username">Username:</label><br>
         <input class="login_field" type="text" id="username" name="username" autofocus="true" autocomplete="off"><br>
