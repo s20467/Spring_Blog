@@ -42,7 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .httpBasic()
                 .and().csrf().ignoringAntMatchers("/h2-console/**")
-                .and().userDetailsService(userDetailsService);
+                .and()
+                    .rememberMe()
+                    .key("eisajfaeofesofijse")
+                    .userDetailsService(userDetailsService);
 
         //http.csrf().disable();
 
