@@ -9,10 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,21 +35,65 @@ class ArticleControllerTest {
 
     ArticleController articleController;
     AutoCloseable autoCloseable;
+    SecurityContextImpl securityContext;
     MockMvc mockMvc;
 
+    User user;
     ArticleDto article1;
     ArticleDto article2;
     Set<ArticleDto> articles;
+
+    public ArticleControllerTest() {
+        user = User.builder().id(1).username("user").build();
+        article1 = ArticleDto.builder().id(1).title("title1").content("content1").author("author1").build();
+        article2 = ArticleDto.builder().id(2).title("title2").content("content2").author("author2").build();
+        articles = new HashSet<>(Set.of(article1, article2));
+
+        securityContext = new SecurityContextImpl();
+        securityContext.setAuthentication(new Authentication() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return null;
+            }
+
+            @Override
+            public Object getCredentials() {
+                return null;
+            }
+
+            @Override
+            public Object getDetails() {
+                return null;
+            }
+
+            @Override
+            public Object getPrincipal() {
+                return user;
+            }
+
+            @Override
+            public boolean isAuthenticated() {
+                return false;
+            }
+
+            @Override
+            public void setAuthenticated(boolean b) throws IllegalArgumentException {
+
+            }
+
+            @Override
+            public String getName() {
+                return null;
+            }
+        });
+    }
 
     @BeforeEach
     void setUp(){
         autoCloseable = MockitoAnnotations.openMocks(this);
         articleController = new ArticleController(articleService);
         mockMvc = MockMvcBuilders.standaloneSetup(articleController).build();
-
-        article1 = ArticleDto.builder().id(1).title("title1").content("content1").author("author1").build();
-        article2 = ArticleDto.builder().id(2).title("title2").content("content2").author("author2").build();
-        articles = new HashSet<>(Set.of(article1, article2));
+        SecurityContextHolder.setContext(securityContext);
     }
 
     @AfterEach
@@ -125,16 +173,15 @@ class ArticleControllerTest {
                 .andExpect(model().attribute("article", article1));
     }
 
-//    @Test
-//    void myArticlesShow() throws Exception{
-//        when(articleService.findByAuthor(any())).thenReturn(articles);
-//        when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(User.builder().username("username").build());
-//
-//        mockMvc.perform(get("/article/my"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("articles_found_view"))
-//                .andExpect(model().attribute("articles", articles));
-//    }
+    @Test
+    void myArticlesShow() throws Exception{
+        when(articleService.findByAuthor(any())).thenReturn(articles);
+
+        mockMvc.perform(get("/article/my"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("articles_found_view"))
+                .andExpect(model().attribute("articles", articles));
+    }
 
     @Test
     void articleEdit() throws Exception{
