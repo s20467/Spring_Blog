@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.security.PermitAll;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,27 +48,26 @@ public class ArticleController {
     }
 
     @GetMapping("/find")
-    public String articleFind(Model model) {
-        model.addAttribute("article", new ArticleDto());
+    public String articleFind() {
         return "article_find";
     }
 
     @PostMapping("/findProcess")
-    public String processArticleFind(Model model, ArticleDto article) {
-        Set<ArticleDto> articles = articleService.findByTitle(article.getTitle());
+    public String processArticleFind(Model model, String articleTitle) {
+        Set<ArticleDto> articles = articleService.findByTitle(articleTitle);
         model.addAttribute("articles", articles);
         return "articles_found_view";
     }
 
     @GetMapping("/findByAuthor")
     public String articleFindByAuthor(Model model) {
-        model.addAttribute("article", new ArticleDto());
         return "article_find_by_author";
     }
 
+
     @PostMapping("/findByAuthorProcess")
-    public String processArticleFindByAuthor(Model model, ArticleDto article) {
-        Set<ArticleDto> articles = articleService.findByAuthor(article.getAuthor());
+    public String processArticleFindByAuthor(Model model, String articleAuthor) {
+        Set<ArticleDto> articles = articleService.findByAuthor(articleAuthor);
         model.addAttribute("articles", articles);
         return "articles_found_view";
     }
