@@ -14,6 +14,6 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     @Query("from Article a where lower(a.title) like :titleLike")
     Iterable<Article> findArticlesByTitleLikeIgnoreCase(@Param("titleLike") String titleLike);
 
-    @Query("select a from Article a left join a.author author where lower(author.username) like :authorLike")
+    @Query("select a from Article a left join a.author author where lower(author.username)=:authorLike")
     Iterable<Article> findArticlesByAuthorLikeIgnoreCase(@Param("authorLike") String authorLike);
 }

@@ -78,7 +78,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Set<ArticleDto> findByAuthor(String author) {
-        String authorLike = "%" + author.toLowerCase() + "%";
+        String authorLike = author.toLowerCase();
         Iterable<Article> articles = articleRepository.findArticlesByAuthorLikeIgnoreCase(authorLike);
         return StreamSupport.stream(articles.spliterator(), false)
                 .map(ArticleDto::new)
