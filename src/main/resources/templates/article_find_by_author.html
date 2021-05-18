@@ -26,7 +26,7 @@
 
 <main>
     <article id="article">
-        <form id="article_find_form" method="POST">
+        <form id="article_find_form" th:action="@{/article/findByAuthorProcess}" method="POST">
             <textarea th:type="text" th:name="articleAuthor" form="article_find_form" id="article_title_textarea"
                       placeholder="Type the author you're looking for"></textarea>
 
