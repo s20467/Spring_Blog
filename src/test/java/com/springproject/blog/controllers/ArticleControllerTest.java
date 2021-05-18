@@ -131,8 +131,7 @@ class ArticleControllerTest {
     void articleFind() throws Exception{
         mockMvc.perform(get("/article/find"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("article_find"))
-                .andExpect(model().attributeExists("article"));
+                .andExpect(view().name("article_find"));
     }
 
     @Test
@@ -149,8 +148,7 @@ class ArticleControllerTest {
     void articleFindByAuthor() throws Exception{
         mockMvc.perform(get("/article/find"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("article_find"))
-                .andExpect(model().attributeExists("article"));
+                .andExpect(view().name("article_find"));
     }
 
     @Test
