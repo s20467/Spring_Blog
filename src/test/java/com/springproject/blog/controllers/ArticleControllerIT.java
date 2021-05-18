@@ -5,32 +5,24 @@ import com.springproject.blog.models.security.User;
 import com.springproject.blog.repositories.ArticleRepository;
 import com.springproject.blog.repositories.security.RoleRepository;
 import com.springproject.blog.repositories.security.UserRepository;
-import com.springproject.blog.services.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.stream.StreamSupport;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
@@ -100,7 +92,7 @@ class ArticleControllerIT {
     }
 
     @Test
-    void getHomePage() throws Exception{
+    void getHomePage() throws Exception {
         mockMvc.perform(get("/article/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("articles_found_view"))
@@ -108,7 +100,7 @@ class ArticleControllerIT {
     }
 
     @Test
-    void articleCreate() throws Exception{
+    void articleCreate() throws Exception {
         mockMvc.perform(get("/article/create"))
                 .andExpect(status().isUnauthorized());
 
@@ -124,43 +116,42 @@ class ArticleControllerIT {
     }
 
 
-
     @Test
-    void articleFind() throws Exception{
+    void articleFind() throws Exception {
         mockMvc.perform(get("/article/find"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("article_find"));
     }
 
     @Test
-    void processArticleFind() throws Exception{
+    void processArticleFind() throws Exception {
         mockMvc.perform(post("/article/findProcess")
-                    .with(csrf())
-                    .param("articleTitle", user1Article.getTitle()))
+                .with(csrf())
+                .param("articleTitle", user1Article.getTitle()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("articles_found_view"))
                 .andExpect(model().attributeExists("articles"));
     }
 
     @Test
-    void articleFindByAuthor() throws Exception{
+    void articleFindByAuthor() throws Exception {
         mockMvc.perform(get("/article/findByAuthor"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("article_find_by_author"));
     }
 
     @Test
-    void processArticleFindByAuthor() throws Exception{
+    void processArticleFindByAuthor() throws Exception {
         mockMvc.perform(post("/article/findByAuthorProcess")
-                    .with(csrf())
-                    .param("articleAuthor", user1Username))
+                .with(csrf())
+                .param("articleAuthor", user1Username))
                 .andExpect(status().isOk())
                 .andExpect(view().name("articles_found_view"))
                 .andExpect(model().attributeExists("articles"));
     }
 
     @Test
-    void articleShow() throws Exception{
+    void articleShow() throws Exception {
         ArticleRepository articleRepository = webApplicationContext.getBean(ArticleRepository.class);
         Article article1 = StreamSupport.stream(articleRepository.findAll().spliterator(), false).findFirst().get();
 
@@ -172,7 +163,7 @@ class ArticleControllerIT {
 
 
     @Test
-    void myArticlesShow() throws Exception{
+    void myArticlesShow() throws Exception {
         mockMvc.perform(get("/article/my"))
                 .andExpect(status().isUnauthorized());
 
@@ -188,7 +179,7 @@ class ArticleControllerIT {
     }
 
     @Test
-    void articleEdit() throws Exception{
+    void articleEdit() throws Exception {
         mockMvc.perform(get("/article/edit/" + user1Article.getId()))
                 .andExpect(status().isUnauthorized());
 
@@ -212,22 +203,25 @@ class ArticleControllerIT {
     }
 
     @Test
-    void articleDeleteUnauthorized() throws Exception{
+    void articleDeleteUnauthorized() throws Exception {
         mockMvc.perform(get("/article/delete/" + user1Article.getId()))
                 .andExpect(status().isUnauthorized());
     }
+
     @Test
-    void articleDeleteOwnerUser() throws Exception{
+    void articleDeleteOwnerUser() throws Exception {
         mockMvc.perform(get("/article/delete/" + user1Article.getId()).with(httpBasic(user1Username, user1Password)))
-            .andExpect(status().is3xxRedirection());
+                .andExpect(status().is3xxRedirection());
     }
+
     @Test
-    void articleDeleteNotOwnerUser() throws Exception{
+    void articleDeleteNotOwnerUser() throws Exception {
         mockMvc.perform(get("/article/delete/" + user1Article.getId()).with(httpBasic(user2Username, user2Password)))
                 .andExpect(status().isForbidden());
     }
+
     @Test
-    void articleDeleteAdmin() throws Exception{
+    void articleDeleteAdmin() throws Exception {
         mockMvc.perform(get("/article/delete/" + user1Article.getId()).with(httpBasic(adminUsername, adminPassword)))
                 .andExpect(status().is3xxRedirection());
     }

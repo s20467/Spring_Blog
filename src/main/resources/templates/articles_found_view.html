@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{/css/style.css}">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Document</title>
 </head>
 <body>
 <header>
-  <a id="logo_href" href="/"><h1 class="logo">Blog Website project</h1></a>
-  <nav>
-    <ul class="menu">
-      <li><a href="/article/findByAuthor">Find Author</a></li>
-      <li><a href="/article/find">Find Article</a></li>
-      <li><a href="/article/create">Add Article</a></li>
-      <li><a href="/article/my">My Articles</a></li>
-      <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
-      <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
-      <li sec:authorize="isAnonymous()"><a href="/register">Register</a></li>
-    </ul>
-  </nav>
+    <a id="logo_href" href="/"><h1 class="logo">Blog Website project</h1></a>
+    <nav>
+        <ul class="menu">
+            <li><a href="/article/findByAuthor">Find Author</a></li>
+            <li><a href="/article/find">Find Article</a></li>
+            <li><a href="/article/create">Add Article</a></li>
+            <li><a href="/article/my">My Articles</a></li>
+            <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
+            <li sec:authorize="isAnonymous()"><a href="/register">Register</a></li>
+        </ul>
+    </nav>
 </header>
 
 <main>
-  <article id="article">
-    <div id="show_article_div" th:each="article : ${articles}">
-      <a id="show_article_href" th:href="@{'article/show/' + ${article.getId()}}">
-        <div th:text="${article.getTitle()}" id="article_title_list">Article Title</div>
-        <div th:text="${article.getAuthor()}" id="article_author_list">Article Author</div>
-      </a>
-    </div>
-  </article>
+    <article id="article">
+        <div id="show_article_div" th:each="article : ${articles}">
+            <a id="show_article_href" th:href="@{'article/show/' + ${article.getId()}}">
+                <div th:text="${article.getTitle()}" id="article_title_list">Article Title</div>
+                <div th:text="${article.getAuthor()}" id="article_author_list">Article Author</div>
+            </a>
+        </div>
+    </article>
 </main>
 
 <footer>

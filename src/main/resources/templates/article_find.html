@@ -26,8 +26,9 @@
 
 <main>
     <article id="article">
-        <form  id="article_find_form" th:action="@{/article/findProcess}" method="POST">
-            <textarea th:type="text" th:name="articleTitle" form="article_find_form" id="article_title_textarea" placeholder="Type the title of what you're looking for"></textarea>
+        <form id="article_find_form" th:action="@{/article/findProcess}" method="POST">
+            <textarea th:type="text" th:name="articleTitle" form="article_find_form" id="article_title_textarea"
+                      placeholder="Type the title of what you're looking for"></textarea>
 
             <button th:type="submit">Find Article</button>
         </form>

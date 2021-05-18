@@ -4,17 +4,11 @@ import com.springproject.blog.models.security.User;
 import com.springproject.blog.repositories.security.RoleRepository;
 import com.springproject.blog.repositories.security.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,16 +24,16 @@ public class LoginController {
     }
 
     @GetMapping("/register")
-    public String register(Model model){
+    public String register(Model model) {
         model.addAttribute("user", new User());
         return "registration_form";
     }
 
     @PostMapping("/register")
-    public String register(Model model, User user){
-        if(user.getUsername().isBlank() || user.getPassword().isBlank())
+    public String register(Model model, User user) {
+        if (user.getUsername().isBlank() || user.getPassword().isBlank())
             return "redirect:/register/?errorBadCredentials";
-        if(userRepository.existsByUsername(user.getUsername()))
+        if (userRepository.existsByUsername(user.getUsername()))
             return "redirect:/register/?errorAlreadyExists";
         User newUser = User.builder()
                 .username(user.getUsername())

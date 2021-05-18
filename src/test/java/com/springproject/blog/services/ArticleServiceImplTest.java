@@ -100,7 +100,7 @@ class ArticleServiceImplTest {
     }
 
     @AfterEach
-    void tearDown() throws Exception{
+    void tearDown() throws Exception {
         autoCloseable.close();
     }
 
@@ -111,7 +111,7 @@ class ArticleServiceImplTest {
         Set<ArticleDto> resultSet = articleService.findAll();
 
         assertEquals(articleDtos.size(), resultSet.size());
-        for(ArticleDto article : resultSet){
+        for (ArticleDto article : resultSet) {
             assertTrue(articleDtos.contains(article));
         }
     }

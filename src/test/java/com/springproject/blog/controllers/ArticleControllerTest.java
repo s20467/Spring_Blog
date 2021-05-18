@@ -7,7 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,12 +19,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class ArticleControllerTest {
@@ -89,7 +87,7 @@ class ArticleControllerTest {
     }
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
         articleController = new ArticleController(articleService);
         mockMvc = MockMvcBuilders.standaloneSetup(articleController).build();
@@ -97,12 +95,12 @@ class ArticleControllerTest {
     }
 
     @AfterEach
-    void tearDown() throws Exception{
+    void tearDown() throws Exception {
         autoCloseable.close();
     }
 
     @Test
-    void getHomePage() throws Exception{
+    void getHomePage() throws Exception {
         mockMvc.perform(get("/article/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("articles_found_view"))
@@ -110,7 +108,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void articleCreate() throws Exception{
+    void articleCreate() throws Exception {
         mockMvc.perform(get("/article/create"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("article_add"))
@@ -118,7 +116,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void processArticleCreate() throws Exception{
+    void processArticleCreate() throws Exception {
         when(articleService.save(any())).thenReturn(article1);
 
         mockMvc.perform(post("/article/createProcess"))
@@ -128,14 +126,14 @@ class ArticleControllerTest {
     }
 
     @Test
-    void articleFind() throws Exception{
+    void articleFind() throws Exception {
         mockMvc.perform(get("/article/find"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("article_find"));
     }
 
     @Test
-    void processArticleFind() throws Exception{
+    void processArticleFind() throws Exception {
         when(articleService.findByTitle(any())).thenReturn(articles);
 
         mockMvc.perform(post("/article/findProcess"))
@@ -145,14 +143,14 @@ class ArticleControllerTest {
     }
 
     @Test
-    void articleFindByAuthor() throws Exception{
+    void articleFindByAuthor() throws Exception {
         mockMvc.perform(get("/article/find"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("article_find"));
     }
 
     @Test
-    void processArticleFindByAuthor() throws Exception{
+    void processArticleFindByAuthor() throws Exception {
         when(articleService.findByAuthor(any())).thenReturn(articles);
 
         mockMvc.perform(post("/article/findByAuthorProcess"))
@@ -162,7 +160,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void articleShow() throws Exception{
+    void articleShow() throws Exception {
         int id = article1.getId();
         when(articleService.findById(article1.getId())).thenReturn(article1);
         mockMvc.perform(get("/article/show/" + id))
@@ -172,7 +170,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void myArticlesShow() throws Exception{
+    void myArticlesShow() throws Exception {
         when(articleService.findByAuthor(any())).thenReturn(articles);
 
         mockMvc.perform(get("/article/my"))
@@ -182,7 +180,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void articleEdit() throws Exception{
+    void articleEdit() throws Exception {
         int id = article1.getId();
         when(articleService.findById(id)).thenReturn(article1);
 
@@ -193,7 +191,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void processArticleEdit() throws Exception{
+    void processArticleEdit() throws Exception {
         doNothing().when(articleService).update(any());
 
         mockMvc.perform(post("/article/editProcess"))
@@ -203,7 +201,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void articleDelete() throws Exception{
+    void articleDelete() throws Exception {
         int id = article1.getId();
         doNothing().when(articleService).deleteById(id);
 
